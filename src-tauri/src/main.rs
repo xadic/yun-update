@@ -3,8 +3,11 @@
 mod db;
 mod config;
 use tauri::{CustomMenuItem, Manager, Menu, MenuItem, Submenu};
+use anyhow::Result;
+use crate::db::util::backup_acdb;
 
-fn main() {
+#[tokio::main]
+async fn main() {
     // here `"quit".to_string()` defines the menu item id, and the second parameter is the menu item label.
     let quit = CustomMenuItem::new("quit".to_string(), "Quit");
     let close = CustomMenuItem::new("close".to_string(), "Close");
@@ -23,6 +26,13 @@ fn main() {
             // app.unlisten(id);
             Ok(())
         })
+        .invoke_handler(tauri::generate_handler![backup])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+}
+
+#[tauri::command]
+async fn backup() -> Result<()>{
+    backup_acdb().await?;
+    Ok(())
 }

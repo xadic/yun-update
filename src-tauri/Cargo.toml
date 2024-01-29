@@ -19,9 +19,13 @@ serde_json = "1.0"
 serde = { version = "1.0", features = ["derive"] }
 serde_yaml = { version = "0.9"}
 tauri = { version = "1.5.2", features = [] }
+# sql server database
 tiberius = "0.12"
-tokio = { version = "1", features = ["net"] }
+tokio = { version = "1", features = ["net", "rt", "macros"] }
 tokio-util = { version = "0.7", features = ["compat"] }
+# error handling
+anyhow = "1.0"
+chrono = { version = "0.4" }
 
 [features]
 # this feature is used for production builds or when `devPath` points to the filesystem and the built-in dev server is disabled.
