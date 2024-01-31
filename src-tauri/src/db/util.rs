@@ -64,12 +64,10 @@ pub async fn clear_all_calibration() -> Result<(), String>{
     let mut client = Client::connect(config, tcp.compat_write()).await.map_err(|err| err.to_string())?;
 
     let db_name = app_config.db_name;
-    // let stmt = format!("backup database @P1 to disk = @P2");
     let stmt = read_to_string("./sql/drop_and_crate.sql").await.map_err(|err| err.to_string())?;
     let stmt = format!("USE [{}] GO {}", db_name, stmt);
 
     let mut stmt = Query::new(stmt);
-    // let params = vec![db_name, backup_path];
     let params = vec![db_name];
     for param in params.into_iter() {
         stmt.bind(param);
