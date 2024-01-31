@@ -12,7 +12,7 @@ pub async fn backup_acdb() -> Result<()> {
     let app_config = init_config().await;
 
     let db_name = app_config.db_name;
-    let backup_path = String::from("E:\\backup\\acdb2024.bak");
+    let backup_path = String::from("E:\\backup\\acdb.bak");
     let stmt = format!("backup database @P1 to disk = @P2");
     let stmt = format!("USE [{}] GO {}", db_name, stmt);
 
