@@ -15,7 +15,8 @@ jobs:
       matrix:
         platform: [ubuntu-20.04, windows-latest]
 
-    runs-on: ${{ matrix.platform }}
+    #runs-on: ${{ matrix.platform }}
+  runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v2
@@ -27,6 +28,36 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
+
+
+      # Download Cache File Webview2 for Windows 7
+      - name: Set File Name
+        id: set-file-name
+        run: echo "::set-output name=file-name::Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64.cab"
+
+      - name: Download and Cache File
+        id: download
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.set-file-name.outputs.file-name }}
+          key: ${{ runner.os }}-file-${{ hashFiles(steps.set-file-name.outputs.file-name) }}
+
+      - name: Check Cache
+        run: |
+          if not exist ${{ steps.set-file-name.outputs.file-name }} (
+            echo File not found in cache. Downloading...
+            curl -o ${{ steps.set-file-name.outputs.file-name }} https://github.com/westinyang/WebView2RuntimeArchive/releases/download/109.0.1518.78/Microsoft.WebView2.${{ steps.set-file-name.outputs.file-name }}
+            powershell (new-object System.Net.WebClient).DownloadFile('https://github.com/westinyang/WebView2RuntimeArchive/releases/download/109.0.1518.78/Microsoft.WebView2.${{ steps.set-file-name.outputs.file-name }}','${{ steps.set-file-name.outputs.file-name }}')
+          ) else (
+            echo File found in cache.
+          )
+
+      - name: Copy and Extract File
+        run: |
+          copy ${{ steps.set-file-name.outputs.file-name }} %GITHUB_WORKSPACE%\${{ steps.set-file-name.outputs.file-name }}
+          expand %GITHUB_WORKSPACE%\${{ steps.set-file-name.outputs.file-name }} -F:* %GITHUB_WORKSPACE%\${{ steps.set-file-name.outputs.file-name }}\
+      ######
+
 
       - name: Install Rust stable
         uses: dtolnay/rust-toolchain@stable
