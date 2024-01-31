@@ -20,7 +20,7 @@ serde = { version = "1.0", features = ["derive"] }
 serde_yaml = { version = "0.9"}
 tauri = { version = "1.5.2", features = [] }
 # sql server database
-tiberius = "0.12"
+tiberius = { version = "0.12", features = [] }
 tokio = { version = "1", features = ["net", "rt", "macros"] }
 tokio-util = { version = "0.7", features = ["compat"] }
 # error handling

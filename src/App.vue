@@ -1,10 +1,16 @@
 <script setup>
+import { invoke } from '@tauri-apps/api';
 import HelloWorld from './components/HelloWorld.vue'
 import { emit } from '@tauri-apps/api/event'
 
 function yun_update() {
   console.log("invoke yun_update")
   emit('update', { message: 'Hello from Vue' })
+}
+
+function backup() {
+  console.log("invoke backup")
+  invoke('backup')
 }
 
 </script>
@@ -20,6 +26,7 @@ function yun_update() {
 
     <div>
       <button @click="yun_update">一键升级</button>
+      <button @click="backup">备份数据库</button>
     </div>
   </div>
   <HelloWorld msg="Vite + Vue" />

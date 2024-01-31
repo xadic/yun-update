@@ -40,7 +40,7 @@ async fn get_client() -> Result<Client<Compat<TcpStream>>> {
     let tcp = TcpStream::connect(config.get_addr()).await.context("无法连接到数据库服务器IP")?;
     tcp.set_nodelay(true)?;
 
-    let mut client = Client::connect(config, tcp.compat_write()).await.context("无法连接到数据库")?;
+    let client = Client::connect(config, tcp.compat_write()).await.context("无法连接到数据库")?;
 
     Ok(client)
 }
