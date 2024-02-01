@@ -47,13 +47,13 @@ jobs:
           if (!(Test-Path ${{ steps.set-file-name.outputs.file-name }})) {
             Write-Host "File not found in cache. Downloading..."
             Invoke-WebRequest -Uri "http://119.23.107.114/Downloads/2023/Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64.cab" -OutFile ${{ steps.set-file-name.outputs.file-name }}
+            Write-Host "File Downloaded."
           } else {
             Write-Host "File found in cache."
           }
 
-      - name: Copy and Extract File
+      - name: Extract File
         run: |
-          Copy-Item ${{ steps.set-file-name.outputs.file-name }} -Destination "$env:GITHUB_WORKSPACE\${{ steps.set-file-name.outputs.file-name }}"
           Expand-Archive -Path "$env:GITHUB_WORKSPACE\${{ steps.set-file-name.outputs.file-name }}" -DestinationPath "$env:GITHUB_WORKSPACE\${{ steps.set-file-name.outputs.file-name }}\"
       ######
 
