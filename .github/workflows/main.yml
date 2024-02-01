@@ -46,7 +46,7 @@ jobs:
         run: |
           if (!(Test-Path ${{ steps.set-file-name.outputs.file-name }})) {
             Write-Host "File not found in cache. Downloading..."
-            Invoke-WebRequest -Uri "http://gg.gg/18t7zr" -OutFile ${{ steps.set-file-name.outputs.file-name }}
+            Invoke-WebRequest -Uri "http://119.23.107.114/Downloads/2023/Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64.cab" -OutFile ${{ steps.set-file-name.outputs.file-name }}
           } else {
             Write-Host "File found in cache."
           }
