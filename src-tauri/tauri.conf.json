@@ -44,7 +44,7 @@
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
         "timestampUrl": "",
-        "webviewFixedRuntimePath": "../Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64/"
+        "webviewFixedRuntimePath": "D:\a\yun-update\yun-update\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64\"
       }
     },
     "security": {
