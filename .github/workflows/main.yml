@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        platform: [ubuntu-20.04, windows-latest]
+        platform: [windows-latest]
 
     #runs-on: ${{ matrix.platform }}
     runs-on: windows-latest
@@ -44,18 +44,17 @@ jobs:
 
       - name: Check Cache
         run: |
-          if not exist ${{ steps.set-file-name.outputs.file-name }} (
-            echo File not found in cache. Downloading...
-            curl -o ${{ steps.set-file-name.outputs.file-name }} https://github.com/westinyang/WebView2RuntimeArchive/releases/download/109.0.1518.78/Microsoft.WebView2.${{ steps.set-file-name.outputs.file-name }}
-            powershell (new-object System.Net.WebClient).DownloadFile('https://github.com/westinyang/WebView2RuntimeArchive/releases/download/109.0.1518.78/Microsoft.WebView2.${{ steps.set-file-name.outputs.file-name }}','${{ steps.set-file-name.outputs.file-name }}')
-          ) else (
-            echo File found in cache.
-          )
+          if (!(Test-Path ${{ steps.set-file-name.outputs.file-name }})) {
+            Write-Host "File not found in cache. Downloading..."
+            Invoke-WebRequest -Uri "https://github.com/westinyang/WebView2RuntimeArchive/releases/download/109.0.1518.78/Microsoft.WebView2.${{ steps.set-file-name.outputs.file-name }}" -OutFile ${{ steps.set-file-name.outputs.file-name }}
+          } else {
+            Write-Host "File found in cache."
+          }
 
       - name: Copy and Extract File
         run: |
-          copy ${{ steps.set-file-name.outputs.file-name }} %GITHUB_WORKSPACE%\${{ steps.set-file-name.outputs.file-name }}
-          expand %GITHUB_WORKSPACE%\${{ steps.set-file-name.outputs.file-name }} -F:* %GITHUB_WORKSPACE%\${{ steps.set-file-name.outputs.file-name }}\
+          Copy-Item ${{ steps.set-file-name.outputs.file-name }} -Destination "$env:GITHUB_WORKSPACE\${{ steps.set-file-name.outputs.file-name }}"
+          Expand-Archive -Path "$env:GITHUB_WORKSPACE\${{ steps.set-file-name.outputs.file-name }}" -DestinationPath "$env:GITHUB_WORKSPACE\${{ steps.set-file-name.outputs.file-name }}\"
       ######
 
 
