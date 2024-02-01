@@ -55,7 +55,7 @@ jobs:
 
       - name: Extract File
         run: |
-          expand "${{ env.file-name }}" -F:* "${{ GITHUB_WORKSPACE }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64\"
+          expand "${{ env.file-name }}" -F:* "${{ env.GITHUB_WORKSPACE }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64\"
       ######
 
 
