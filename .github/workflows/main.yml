@@ -55,7 +55,9 @@ jobs:
 
       - name: Extract File
         run: |
-          expand "${{ env.file-name }}" -F:* "${{ env.GITHUB_WORKSPACE }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64\"
+          New-Item -ItemType Directory -Path "${{ env.GITHUB_WORKSPACE }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64" -Force
+          expand "${{ env.file-name }}" -F:* "${{ env.GITHUB_WORKSPACE }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64"
+          Write-Host "File is extracted in ${{ env.GITHUB_WORKSPACE }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64"
       ######
 
 
