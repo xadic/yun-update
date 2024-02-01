@@ -35,30 +35,30 @@ jobs:
 
 
       # Download Cache File Webview2 for Windows 7
-      - name: Download and Cache File
-        id: download
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.file-name }}
-          key: ${{ runner.os }}-file-${{ hashFiles(env.file-name) }}
+      # - name: Download and Cache File
+      #   id: download
+      #   uses: actions/cache@v4
+      #   with:
+      #     path: ${{ env.file-name }}
+      #     key: ${{ runner.os }}-file-${{ hashFiles(env.file-name) }}
 
-      - name: Check Cache
-        run: |
-          if (!(Test-Path ${{ env.file-name }})) {
-            Write-Host "Current working directory:"
-            Get-Location
-            Write-Host "File not found in cache. Downloading..."
-            Invoke-WebRequest -Uri "http://119.23.107.114/Downloads/2023/Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64.cab" -OutFile ${{ env.file-name }}
-            Write-Host "File Downloaded."
-          } else {
-            Write-Host "File found in cache."
-          }
+      # - name: Check Cache
+      #   run: |
+      #     if (!(Test-Path ${{ env.file-name }})) {
+      #       Write-Host "Current working directory:"
+      #       Get-Location
+      #       Write-Host "File not found in cache. Downloading..."
+      #       Invoke-WebRequest -Uri "http://119.23.107.114/Downloads/2023/Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64.cab" -OutFile ${{ env.file-name }}
+      #       Write-Host "File Downloaded."
+      #     } else {
+      #       Write-Host "File found in cache."
+      #     }
 
-      - name: Extract File
-        run: |
-          New-Item -ItemType Directory -Path "${{ env.workspace }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64" -Force
-          expand "${{ env.file-name }}" -F:* "${{ env.workspace }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64"
-          Write-Host "File is extracted in ${{ env.workspace }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64"
+      # - name: Extract File
+      #   run: |
+      #     New-Item -ItemType Directory -Path "${{ env.workspace }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64" -Force
+      #     expand "${{ env.file-name }}" -F:* "${{ env.workspace }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64"
+      #     Write-Host "File is extracted in ${{ env.workspace }}\Microsoft.WebView2.FixedVersionRuntime.109.0.1518.78.x64"
       ######
 
 
